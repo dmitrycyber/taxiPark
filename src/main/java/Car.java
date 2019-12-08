@@ -5,15 +5,17 @@ public abstract class Car implements Comparable<Car> {
     private String make;
     private double fuelConsumption;
     private int countOfSeatingPositions;
-    private String type;
     private double cost;
     private int yearOfIssue;
+    private String type;
 
-    public Car(String model, String make, double fuelConsumption, int countOfSeatingPositions, String type) {
+    public Car(String model, String make, double fuelConsumption, int countOfSeatingPositions, double cost, int yearOfIssue, String type) {
         this.model = model;
         this.make = make;
         this.fuelConsumption = fuelConsumption;
         this.countOfSeatingPositions = countOfSeatingPositions;
+        this.cost = cost;
+        this.yearOfIssue = yearOfIssue;
         this.type = type;
     }
 
@@ -57,6 +59,22 @@ public abstract class Car implements Comparable<Car> {
         this.type = type;
     }
 
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public int getYearOfIssue() {
+        return yearOfIssue;
+    }
+
+    public void setYearOfIssue(int yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,6 +98,9 @@ public abstract class Car implements Comparable<Car> {
                 ", make='" + make + '\'' +
                 ", fuelConsumption=" + fuelConsumption +
                 ", countOfSeatingPositions=" + countOfSeatingPositions +
+                ", cost=" + cost +
+                ", yearOfIssue=" + yearOfIssue +
+                ", type=" + yearOfIssue +
                 '}';
     }
 
