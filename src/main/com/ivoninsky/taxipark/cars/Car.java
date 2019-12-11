@@ -1,3 +1,5 @@
+package com.ivoninsky.taxipark.cars;
+
 import java.util.Objects;
 
 public abstract class Car implements Comparable<Car> {
@@ -100,7 +102,7 @@ public abstract class Car implements Comparable<Car> {
                 ", countOfSeatingPositions=" + countOfSeatingPositions +
                 ", cost=" + cost +
                 ", yearOfIssue=" + yearOfIssue +
-                ", type=" + yearOfIssue +
+                ", type=" + type +
                 '}';
     }
 

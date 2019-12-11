@@ -1,3 +1,11 @@
+package com.ivoninsky.taxipark.json;
+
+import com.ivoninsky.taxipark.cars.Bus;
+import com.ivoninsky.taxipark.cars.Car;
+import com.ivoninsky.taxipark.cars.Minivan;
+import com.ivoninsky.taxipark.cars.Sedan;
+import com.ivoninsky.taxipark.interfaces.TaxiPark;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -74,7 +82,7 @@ public class JSONReader {
     private Car createCarFromMapOfProperties(Map<String, String> map){
         Car car = null;
         if(map.get("type").equals("Sedan")){
-            car = new Sedan(map.get("model"),
+             car = new Sedan(map.get("model"),
                     map.get("make"),
                     Double.parseDouble(map.get("fuelConsumption")) ,
                     Integer.parseInt(map.get("countOfSeatingPositions")),
