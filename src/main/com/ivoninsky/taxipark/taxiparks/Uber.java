@@ -11,7 +11,9 @@ public class Uber implements TaxiPark {
     private Map<Car, Integer> mapOfCars = new HashMap<>();
     private double costOfCars;
     private List<Car> listOfCars = new ArrayList<>();
-
+    private List<Car> economClass = new ArrayList<>();
+    private List<Car> comfortClass = new ArrayList<>();
+    private List<Car> businessClass = new ArrayList<>();
 
     @Override
     public void addCarToPark(Car car) {
@@ -21,6 +23,15 @@ public class Uber implements TaxiPark {
         }
         mapOfCars.put(car, countOfCars + 1);
         listOfCars.add(car);
+        if (car.getCost() <= 10000){
+            economClass.add(car);
+        }
+        else if (car.getCost() > 10000 && car.getCost() <= 15000){
+            comfortClass.add(car);
+        }
+        else{
+            businessClass.add(car);
+        }
         costOfCars += car.getCost();
     }
 
@@ -43,9 +54,16 @@ public class Uber implements TaxiPark {
         jsonWriter.writeToJSON(pathToFile, getMapOfCars());
     }
 
-    @Override
-    public int calculateOrderCost() {
-        return 0;
+    private int calculateKilometerCost(Car car) {
+        if (economClass.contains(car)){
+            return 1;
+        }
+        else if (comfortClass.contains(car)){
+            return 2;
+        }
+        else {
+            return 3;
+        }
     }
 
     @Override
@@ -58,11 +76,22 @@ public class Uber implements TaxiPark {
         CarFuelComparator carFuelComparator = new CarFuelComparator();
         Map<Car, Integer> sortedMap = new TreeMap<>(carFuelComparator);
         sortedMap.putAll(getMapOfCars());
+        printSortedMap(sortedMap);
         return sortedMap;
     }
 
     @Override
     public Map<Car, Integer> getTopExpensiveCars() {
         return null;
+    }
+
+    public void printSortedMap(Map<Car, Integer> givenMap){
+        if (givenMap.size() != 0){
+            for (Map.Entry<Car, Integer> entry : givenMap.entrySet()){
+                System.out.println(entry.getKey() + " count: " + entry.getValue());
+            }
+        }
+        System.out.println("No added cars to taxi park");
+
     }
 }

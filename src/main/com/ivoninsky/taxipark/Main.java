@@ -10,14 +10,8 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        TaxiPark taxiPark = new Uber();
-        JSONReader jsonReader = new JSONReader();
-
-        jsonReader.addCarsFromFileToTaxiPark("cars.json", taxiPark);
-
-        UberCarSearcher uberCarSearcher = new UberCarSearcher(taxiPark);
-
-        uberCarSearcher.init();
+        ConsoleNavigation console = new ConsoleNavigation();
+        console.start();
 
 
 

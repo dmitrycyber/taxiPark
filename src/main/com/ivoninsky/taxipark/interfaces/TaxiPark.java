@@ -11,7 +11,7 @@ public interface TaxiPark {
     List<Car> getListOfCars();
     double getCostOfCars();
     void writeCarsToJSON(String pathToFile);
-    int calculateOrderCost();
+    //int calculateKilometerCost(Car car);
     Car getOfferACar();
     Map<Car, Integer> orderCarByFuelConsumption();
     Map<Car, Integer> getTopExpensiveCars();

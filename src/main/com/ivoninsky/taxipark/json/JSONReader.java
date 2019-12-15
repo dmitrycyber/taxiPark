@@ -14,30 +14,27 @@ import java.util.*;
 
 public class JSONReader {
 
-    public void addCarsFromFileToTaxiPark(String pathToFile, TaxiPark taxiPark){
+    public void addCarsFromFileToTaxiPark(String pathToFile, TaxiPark taxiPark) throws FileNotFoundException, StringIndexOutOfBoundsException {
         List<Car> listOfCars = init(pathToFile);
         for (int i = 0; i < listOfCars.size(); i++) {
             taxiPark.addCarToPark(listOfCars.get(i));
         }
     }
 
-    private List<Car> init(String pathToFile){
+    private List<Car> init(String pathToFile) throws FileNotFoundException, StringIndexOutOfBoundsException{
         String parsedString = readJson(pathToFile);
         String formatedString = getFormatedStringFromJson(parsedString);
         List<Car> listOfCars = getListOfCarsFromFile(formatedString);
         return listOfCars;
     }
 
-    private String readJson(String pathToFile){
+    private String readJson(String pathToFile) {
         String parsedString = "";
         String line;
         try(FileReader fileReader = new FileReader(pathToFile); BufferedReader rd = new BufferedReader(fileReader)){
             while ((line = rd.readLine()) != null){
                 parsedString += line;
             }
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
         catch (IOException e) {
             e.printStackTrace();

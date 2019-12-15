@@ -15,35 +15,60 @@ public class UberCarSearcher {
         this.listOfCars = taxiPark.getListOfCars();
     }
 
-    public void init(){
+    public void start(){
         List<Car> filteredListOfCars = new ArrayList<>(listOfCars);
         Scanner sc = new Scanner(System.in);
-        String isContinue = "yes";
+        String isContinue;
 
         do {
-            System.out.println("Input filter criteria: ");
+            System.out.println("Input filter criteria (model/make/fuelConsumption/countOfSeatingPositions/cost/type): ");
             switch (sc.next()){
                 case ("model"):
                     System.out.println("Input model: ");
                     filteredListOfCars =  searchCarsByModel(sc.next(), filteredListOfCars);
-                    System.out.println(filteredListOfCars);
+                    printFilteredListOfCars(filteredListOfCars);
                     break;
                 case ("make"):
                     System.out.println("Input make: ");
                     filteredListOfCars =  searchCarsByMake(sc.next(), filteredListOfCars);
-                    System.out.println(filteredListOfCars);
+                    printFilteredListOfCars(filteredListOfCars);
                     break;
+                case("fuelConsumption"):
+                    System.out.println("Input fuelConsumption from: ");
+                    double startFuelConsumption = sc.nextDouble();
+                    System.out.println("Input fuelConsumption to: ");
+                    double finishFuelConsumption = sc.nextDouble();
+                    filteredListOfCars = searchCarsByFuelConsumption(startFuelConsumption, finishFuelConsumption, filteredListOfCars);
+                    printFilteredListOfCars(filteredListOfCars);
+                    break;
+                case("countOfSeatingPositions"):
+                    System.out.println("Input countOfSeatingPositions from: ");
+                    int startCountOfSeatingPositions = sc.nextInt();
+                    System.out.println("Input countOfSeatingPositions to: ");
+                    int finishCountOfSeatingPositions = sc.nextInt();
+                    filteredListOfCars = searchCarsByCountOfSeatingPositions(startCountOfSeatingPositions, finishCountOfSeatingPositions, filteredListOfCars);
+                    printFilteredListOfCars(filteredListOfCars);
+                    break;
+                case("cost"):
+                    System.out.println("Input cost from: ");
+                    double startCost = sc.nextDouble();
+                    System.out.println("Input cost to: ");
+                    double finishCost = sc.nextDouble();
+                    filteredListOfCars = searchCarsByCost(startCost, finishCost, filteredListOfCars);
+                    printFilteredListOfCars(filteredListOfCars);
+                    break;
+                case("type"):
+                    System.out.println("Input type: ");
+                    filteredListOfCars = searchCarsByType(sc.next(), filteredListOfCars);
+                    printFilteredListOfCars(filteredListOfCars);
+                    break;
+                default:
+                    System.out.println("Input type correctly (model/make/fuelConsumption/countOfSeatingPositions/cost/type)");
             }
             System.out.println("Do y want to continue? (yes/no)");
             isContinue = sc.next();
         }
-
         while (isContinue.equals("yes"));
-
-        System.out.println(filteredListOfCars);
-
-
-
     }
 
     public List<Car> getListOfCars() {
@@ -128,6 +153,13 @@ public class UberCarSearcher {
             }
         }
         return filteredListOfCars;
+    }
+
+    private void printFilteredListOfCars(List<Car> listOfCars){
+        for (int i = 0; i < listOfCars.size(); i++) {
+            System.out.println(i+1 + ". " + listOfCars.get(i));
+        }
+        System.out.println();
     }
 
 }
