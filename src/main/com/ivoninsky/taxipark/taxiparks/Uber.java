@@ -17,6 +17,9 @@ public class Uber implements TaxiPark {
 
     @Override
     public void addCarToPark(Car car) {
+        if (car == null){
+            return;
+        }
         Integer countOfCars = mapOfCars.get(car);
         if (countOfCars == null){
             countOfCars = 0;

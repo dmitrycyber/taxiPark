@@ -1,4 +1,4 @@
-package com.ivoninsky.taxipark;
+package com.ivoninsky.taxipark.consoleNavigation;
 
 import com.ivoninsky.taxipark.cars.Bus;
 import com.ivoninsky.taxipark.cars.Car;
@@ -6,44 +6,23 @@ import com.ivoninsky.taxipark.cars.Minivan;
 import com.ivoninsky.taxipark.cars.Sedan;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 import com.ivoninsky.taxipark.json.JSONReader;
-import com.ivoninsky.taxipark.taxiparks.Uber;
 import com.ivoninsky.taxipark.taxiparks.UberCarSearcher;
+import com.ivoninsky.taxipark.validators.FileNameValidator;
 
 import java.io.FileNotFoundException;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleNavigation {
-    private TaxiPark taxiPark;
-    private JSONReader jsonReader;
-    private Scanner sc;
+public class AdminFunctions {
+    TaxiPark taxiPark;
+    Scanner sc = new Scanner(System.in);
+    JSONReader jsonReader = new JSONReader();
 
-    public void start(){
-        taxiPark = new Uber();
-        jsonReader = new JSONReader();
-        System.out.println("Hello, input your role (admin/user): ");
-        defineRole();
+    public AdminFunctions(TaxiPark taxiPark){
+        this.taxiPark = taxiPark;
     }
 
-    private void defineRole(){
-        sc = new Scanner(System.in);
-        String role = sc.next();
-        while (!role.equals("admin") && !role.equals("user")){
-            System.out.println("Input your role correctly (admin/user)");
-            role = sc.next();
-        }
-        if (role.equals("admin")){
-            System.out.println("Hello, admin!");
-            adminFunctionality();
-        }
-        else {
-            System.out.println("Hello, user!");
-        }
-        sc.close();
-    }
-
-    private void adminFunctionality(){
+    public void adminFunctionality(){
         sc = new Scanner(System.in);
         String numberOfFunction;
         do {
@@ -53,6 +32,7 @@ public class ConsoleNavigation {
                     "3. Get cost of cars" + "\n" +
                     "4. Order cars by fuel consumption" + "\n" +
                     "5. Search car by criteria" + "\n" +
+                    "6. Add cars to file" + "\n" +
                     "Input \"~\" for exit");
             numberOfFunction = sc.next();
             switch (numberOfFunction){
@@ -96,6 +76,16 @@ public class ConsoleNavigation {
                     UberCarSearcher uberCarSearcher = new UberCarSearcher(taxiPark);
                     uberCarSearcher.start();
                     break;
+                case("6"):
+                    System.out.println("Input filename like \"test.json\": ");
+                    String fileName = sc.next();
+                    FileNameValidator fileNameValidator = new FileNameValidator();
+                    while (!fileNameValidator.validate(fileName)){
+                        System.out.println("file name is incorrect, please input name like \"test.json\": ");
+                        fileName = sc.next();
+                    }
+                    taxiPark.writeCarsToJSON(fileName);
+                    break;
                 case ("~"):
                     System.out.println("Goodbye");
                     break;
@@ -105,7 +95,6 @@ public class ConsoleNavigation {
             }
         }
         while (!numberOfFunction.equals("~"));
-
         sc.close();
     }
 
@@ -142,17 +131,52 @@ public class ConsoleNavigation {
                 System.out.println("Incorrect car fuel consumption, please input again");
             }
         }
-
-
-        System.out.println("Input count of seating positions in car: ");
-        int countOfSeatingPositions = sc.nextInt();
-        System.out.println("Input car cost: ");
-        double cost = sc.nextDouble();
-        System.out.println("Input car year of issue: ");
-        int yearOfIssue = sc.nextInt();
+        int countOfSeatingPositions = 0;
+        isReinput = true;
+        while (isReinput){
+            try{
+                System.out.println("Input count of seating positions in car: ");
+                String s = sc.next();
+                countOfSeatingPositions = Integer.parseInt(s);
+                isReinput = false;
+            }
+            catch (NumberFormatException e){
+                System.out.println("Incorrect count of seating positions, please input again");
+            }
+        }
+        isReinput = true;
+        double cost = 0;
+        while (isReinput){
+            try{
+                System.out.println("Input car cost: ");
+                String s = sc.next();
+                cost = Double.parseDouble(s);
+                isReinput = false;
+            }
+            catch (NumberFormatException e){
+                System.out.println("Incorrect cost, please input again");
+            }
+        }
+        int yearOfIssue = 0;
+        isReinput = true;
+        while (isReinput){
+            try{
+                System.out.println("Input car year of issue: ");
+                String s = sc.next();
+                yearOfIssue = Integer.parseInt(s);
+                isReinput = false;
+            }
+            catch (NumberFormatException e){
+                System.out.println("Incorrect year of issue, please input again");
+            }
+        }
         System.out.println("Input car type (Sedan/Minivan/Bus): ");
         String type = sc.next();
         Car car = null;
+        while (!type.equals("Sedan") && !type.equals("Minivan") && !type.equals("Bus")){
+            System.out.println("Incorrect type, please input again (Sedan/Minivan/Bus): ");
+            type = sc.next();
+        }
         if(type.equals("Sedan")){
             car = new Sedan(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
         }
@@ -162,10 +186,10 @@ public class ConsoleNavigation {
         else if (type.equals("Bus")){
             car = new Bus(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
         }
-        else{
-            System.out.println("Incorrect type, try again");
+        if (car != null){
+            System.out.printf("Added %s%n", car);
         }
+        sc.close();
         return car;
     }
-
 }
