@@ -1,6 +1,8 @@
 package com.ivoninsky.taxipark.taxiparks;
 
 import com.ivoninsky.taxipark.cars.Car;
+import com.ivoninsky.taxipark.cars.Sedan;
+import com.ivoninsky.taxipark.sorters.CarCostComparator;
 import com.ivoninsky.taxipark.sorters.CarFuelComparator;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 import com.ivoninsky.taxipark.json.JSONWriter;
@@ -46,10 +48,7 @@ public class Uber implements TaxiPark {
         return new HashMap<>(mapOfCars);
     }
 
-    @Override
-    public double getCostOfCars() {
-        return new Double(costOfCars);
-    }
+
 
     @Override
     public void writeCarsToJSON(String pathToFile) {
@@ -84,17 +83,50 @@ public class Uber implements TaxiPark {
     }
 
     @Override
-    public Map<Car, Integer> getTopExpensiveCars() {
-        return null;
+    public double getCostOfCars() {
+        return new Double(costOfCars);
+    }
+
+    @Override
+    public Map<Car, Integer> getTopExpensiveCars(int count) {
+        CarCostComparator carCostComparator = new CarCostComparator();
+        TreeMap<Car, Integer> map = new TreeMap<>(carCostComparator);
+        map.putAll(mapOfCars);
+        int counter = 0;
+        Map<Car, Integer> mapWithTopElements = new TreeMap<>(carCostComparator);
+        for(Map.Entry<Car, Integer> entry : map.entrySet()){
+            if (counter == count){
+                break;
+            }
+            mapWithTopElements.put(entry.getKey(), entry.getValue());
+            counter++;
+        }
+        printSortedMap(mapWithTopElements);
+        return mapWithTopElements;
     }
 
     public void printSortedMap(Map<Car, Integer> givenMap){
         if (givenMap.size() != 0){
+            int count = 0;
             for (Map.Entry<Car, Integer> entry : givenMap.entrySet()){
-                System.out.println(entry.getKey() + " count: " + entry.getValue());
+                System.out.println(count+1 + ". " + entry.getKey() + " count: " + entry.getValue());
+                count++;
             }
         }
-        System.out.println("No added cars to taxi park");
+        else {
+            System.out.println("No added cars to taxi park");
+        }
 
+    }
+
+    public void printListOfCars(List<Car> listOfCars){
+        if (listOfCars.size() != 0){
+            for (int i = 0; i < listOfCars.size(); i++) {
+                System.out.println(i+1 + ". " + listOfCars.get(i));
+            }
+        }
+        else {
+            System.out.println("No added cars to taxi park");
+        }
     }
 }

@@ -7,9 +7,7 @@ public class FileNameValidator {
     private Pattern pattern;
     private Matcher matcher;
 
-
     private final String FILENAME_PATTERN = "^[A-z0-9_-]{1,10}.json";
-
 
     public FileNameValidator(){
         pattern = Pattern.compile(FILENAME_PATTERN);

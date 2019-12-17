@@ -14,6 +14,6 @@ public interface TaxiPark {
     //int calculateKilometerCost(Car car);
     Car getOfferACar();
     Map<Car, Integer> orderCarByFuelConsumption();
-    Map<Car, Integer> getTopExpensiveCars();
+    Map<Car, Integer> getTopExpensiveCars(int count);
 
 }

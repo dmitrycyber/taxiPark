@@ -7,6 +7,7 @@ import com.ivoninsky.taxipark.cars.Sedan;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 import com.ivoninsky.taxipark.json.JSONReader;
 import com.ivoninsky.taxipark.taxiparks.UberCarSearcher;
+import com.ivoninsky.taxipark.validators.IntegerValidator;
 import com.ivoninsky.taxipark.validators.FileNameValidator;
 
 import java.io.FileNotFoundException;
@@ -32,7 +33,8 @@ public class AdminFunctions {
                     "3. Get cost of cars" + "\n" +
                     "4. Order cars by fuel consumption" + "\n" +
                     "5. Search car by criteria" + "\n" +
-                    "6. Add cars to file" + "\n" +
+                    "6. Get top expensive cars" + "\n" +
+                    "7. Add cars to file" + "\n" +
                     "Input \"~\" for exit");
             numberOfFunction = sc.next();
             switch (numberOfFunction){
@@ -76,7 +78,29 @@ public class AdminFunctions {
                     UberCarSearcher uberCarSearcher = new UberCarSearcher(taxiPark);
                     uberCarSearcher.start();
                     break;
-                case("6"):
+                case ("6"):
+                    System.out.println("Input count of top expensive cars: ");
+                    String s = sc.next();
+                    IntegerValidator validator = new IntegerValidator();
+                    while (true){
+                        if (!validator.validate(s)){
+                            System.out.println("Input valid count of cars: ");
+                            s = sc.next();
+                            continue;
+                        }
+                        int countOfCars = Integer.parseInt(s);
+                        if (countOfCars > taxiPark.getListOfCars().size()){
+                            System.out.println("There are not as many cars in taxi park, please input count of cars less, than " +
+                                    taxiPark.getListOfCars().size() +
+                                            " number of cars");
+                            s = sc.next();
+                            continue;
+                        }
+                        taxiPark.getTopExpensiveCars(countOfCars);
+                        break;
+                    }
+                    break;
+                case("7"):
                     System.out.println("Input filename like \"test.json\": ");
                     String fileName = sc.next();
                     FileNameValidator fileNameValidator = new FileNameValidator();
