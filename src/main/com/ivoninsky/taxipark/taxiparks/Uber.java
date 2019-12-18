@@ -48,15 +48,14 @@ public class Uber implements TaxiPark {
         return new HashMap<>(mapOfCars);
     }
 
-
-
     @Override
     public void writeCarsToJSON(String pathToFile) {
         JSONWriter jsonWriter = new JSONWriter();
         jsonWriter.writeToJSON(pathToFile, getMapOfCars());
     }
 
-    private int calculateKilometerCost(Car car) {
+
+    private double calculateKilometerCost(Car car) {
         if (economClass.contains(car)){
             return 1;
         }
@@ -67,6 +66,26 @@ public class Uber implements TaxiPark {
             return 3;
         }
     }
+
+
+    private double calculateCarFee(Car car) {
+        if (economClass.contains(car)){
+            return 10;
+        }
+        else if (comfortClass.contains(car)){
+            return 20;
+        }
+        else {
+            return 30;
+        }
+    }
+
+    public double calculateTotalCostOrder(Car car, int countOfKilometers){
+        double payForKilometers = countOfKilometers * calculateKilometerCost(car);
+        double carFee = calculateCarFee(car);
+        return payForKilometers + carFee;
+    }
+
 
     @Override
     public Car getOfferACar() {
@@ -128,5 +147,17 @@ public class Uber implements TaxiPark {
         else {
             System.out.println("No added cars to taxi park");
         }
+    }
+
+    public List<Car> getEconomClass() {
+        return new ArrayList<>(economClass);
+    }
+
+    public List<Car> getComfortClass() {
+        return new ArrayList<>(comfortClass);
+    }
+
+    public List<Car> getBusinessClass() {
+        return new ArrayList<>(businessClass);
     }
 }

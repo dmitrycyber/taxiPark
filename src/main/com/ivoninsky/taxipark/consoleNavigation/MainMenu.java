@@ -6,15 +6,26 @@ import java.util.Scanner;
 
 public class MainMenu {
     private TaxiPark taxiPark;
+    private Scanner sc;
+
+    public MainMenu(){
+        sc = new Scanner(System.in);
+    }
 
     public void start(){
+        String isExit;
         taxiPark = new Uber();
-        System.out.println("Hello, input your role (admin/user): ");
-        defineRole();
+        do{
+            System.out.println("Hello, input your role (admin/user): ");
+            defineRole();
+            System.out.println("To swich user input \"1\" and \"any symbol\" to exit");
+            isExit = sc.next();
+        }
+        while (isExit.equals("1"));
+        sc.close();
     }
 
     private void defineRole(){
-        Scanner sc = new Scanner(System.in);
         String role = sc.next();
         while (!role.equals("admin") && !role.equals("user")){
             System.out.println("Input your role correctly (admin/user)");
@@ -27,8 +38,9 @@ public class MainMenu {
         }
         else {
             System.out.println("Hello, user!");
+            UserFunctions userFunctions = new UserFunctions(taxiPark);
+            userFunctions.userFunctionality();
         }
-        sc.close();
     }
 
 }

@@ -119,7 +119,7 @@ public class AdminFunctions {
             }
         }
         while (!numberOfFunction.equals("~"));
-        sc.close();
+        //sc.close();
     }
 
     private void printListOfCars(List<Car> listOfCars){
