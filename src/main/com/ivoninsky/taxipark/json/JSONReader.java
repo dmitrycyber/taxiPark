@@ -21,7 +21,7 @@ public class JSONReader {
         }
     }
 
-    private List<Car> init(String pathToFile) throws FileNotFoundException, StringIndexOutOfBoundsException{
+    private List<Car> init(String pathToFile) throws FileNotFoundException, StringIndexOutOfBoundsException {
         String parsedString = readJson(pathToFile);
         String formatedString = getFormatedStringFromJson(parsedString);
         List<Car> listOfCars = getListOfCarsFromFile(formatedString);
@@ -31,19 +31,18 @@ public class JSONReader {
     private String readJson(String pathToFile) {
         String parsedString = "";
         String line;
-        try(FileReader fileReader = new FileReader(pathToFile); BufferedReader rd = new BufferedReader(fileReader)){
-            while ((line = rd.readLine()) != null){
+        try (FileReader fileReader = new FileReader(pathToFile); BufferedReader rd = new BufferedReader(fileReader)) {
+            while ((line = rd.readLine()) != null) {
                 parsedString += line;
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return parsedString;
     }
 
-    private String getFormatedStringFromJson(String parsedString){
+    private String getFormatedStringFromJson(String parsedString) {
         String formatedString;
         String string1 = parsedString.replaceAll("]", "");
         String string2 = string1.replaceAll("\\[", "");
@@ -52,12 +51,12 @@ public class JSONReader {
 
         StringBuffer sb = new StringBuffer(string4);
         sb.delete(0, 1);
-        sb.delete(sb.length()-1, sb.length());
+        sb.delete(sb.length() - 1, sb.length());
         formatedString = sb.toString();
         return formatedString;
     }
 
-    private List<Car> getListOfCarsFromFile(String formatedString){
+    private List<Car> getListOfCarsFromFile(String formatedString) {
         String[] carStrings = formatedString.split("},\\{");
         Map<String, String> propertiesOfCar = new HashMap<>();
         List<Car> cars = new ArrayList<>();
@@ -76,30 +75,29 @@ public class JSONReader {
         return cars;
     }
 
-    private Car createCarFromMapOfProperties(Map<String, String> map){
+    private Car createCarFromMapOfProperties(Map<String, String> map) {
         Car car = null;
-        if(map.get("type").equals("Sedan")){
-             car = new Sedan(map.get("model"),
+        if (map.get("type").equals("Sedan")) {
+            car = new Sedan(
+                    map.get("model"),
                     map.get("make"),
-                    Double.parseDouble(map.get("fuelConsumption")) ,
+                    Double.parseDouble(map.get("fuelConsumption")),
                     Integer.parseInt(map.get("countOfSeatingPositions")),
                     Double.parseDouble(map.get("cost")),
                     Integer.parseInt(map.get("yearOfIssue")),
                     map.get("type"));
-        }
-        else if (map.get("type").equals("Minivan")){
+        } else if (map.get("type").equals("Minivan")) {
             car = new Minivan(map.get("model"),
                     map.get("make"),
-                    Double.parseDouble(map.get("fuelConsumption")) ,
+                    Double.parseDouble(map.get("fuelConsumption")),
                     Integer.parseInt(map.get("countOfSeatingPositions")),
                     Double.parseDouble(map.get("cost")),
                     Integer.parseInt(map.get("yearOfIssue")),
                     map.get("type"));
-        }
-        else if (map.get("type").equals("Bus")){
+        } else if (map.get("type").equals("Bus")) {
             car = new Bus(map.get("model"),
                     map.get("make"),
-                    Double.parseDouble(map.get("fuelConsumption")) ,
+                    Double.parseDouble(map.get("fuelConsumption")),
                     Integer.parseInt(map.get("countOfSeatingPositions")),
                     Double.parseDouble(map.get("cost")),
                     Integer.parseInt(map.get("yearOfIssue")),
