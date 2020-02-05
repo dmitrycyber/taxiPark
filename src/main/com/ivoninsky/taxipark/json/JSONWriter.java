@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Map;
 
 public class JSONWriter {
-    public void writeToJSON(String pathToFile, Map<Car, Integer> cars){
-        try (FileWriter fileWriter = new FileWriter(pathToFile, true); BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)){
+    public void writeToJSON(String pathToFile, Map<Car, Integer> cars) {
+        try (FileWriter fileWriter = new FileWriter(pathToFile, true); BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             String start = "[";
             String finish = "]";
             bufferedWriter.write(start + "\n");
@@ -24,18 +24,16 @@ public class JSONWriter {
                 bufferedWriter.write("\t\t" + "\"cost\":" + "\"" + entry.getKey().getCost() + "\"" + ",\n");
                 bufferedWriter.write("\t\t" + "\"yearOfIssue\":" + "\"" + entry.getKey().getYearOfIssue() + "\"" + ",\n");
                 bufferedWriter.write("\t\t" + "\"type\":" + "\"" + entry.getKey().getType() + "\"" + "\n");
-                count ++;
-                if(count < cars.size()){
+                count++;
+                if (count < cars.size()) {
                     bufferedWriter.write("\t" + "},\n");
-                }
-                else {
+                } else {
                     bufferedWriter.write("\t" + "}\n");
                 }
             }
             bufferedWriter.write(finish);
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

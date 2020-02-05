@@ -2,7 +2,6 @@ package com.ivoninsky.taxipark.taxiparks;
 
 import com.ivoninsky.taxipark.cars.Car;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
-import com.ivoninsky.taxipark.taxiparks.Uber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,25 +14,25 @@ public class UberCarSearcher {
         this.listOfCars = taxiPark.getListOfCars();
     }
 
-    public void start(){
+    public void start() {
         List<Car> filteredListOfCars = new ArrayList<>(listOfCars);
         Scanner sc = new Scanner(System.in);
         String isContinue;
 
         do {
             System.out.println("Input filter criteria (model/make/fuelConsumption/countOfSeatingPositions/cost/type): ");
-            switch (sc.next()){
+            switch (sc.next()) {
                 case ("model"):
                     System.out.println("Input model: ");
-                    filteredListOfCars =  searchCarsByModel(sc.next(), filteredListOfCars);
+                    filteredListOfCars = searchCarsByModel(sc.next(), filteredListOfCars);
                     printFilteredListOfCars(filteredListOfCars);
                     break;
                 case ("make"):
                     System.out.println("Input make: ");
-                    filteredListOfCars =  searchCarsByMake(sc.next(), filteredListOfCars);
+                    filteredListOfCars = searchCarsByMake(sc.next(), filteredListOfCars);
                     printFilteredListOfCars(filteredListOfCars);
                     break;
-                case("fuelConsumption"):
+                case ("fuelConsumption"):
                     System.out.println("Input fuelConsumption from: ");
                     double startFuelConsumption = sc.nextDouble();
                     System.out.println("Input fuelConsumption to: ");
@@ -41,7 +40,7 @@ public class UberCarSearcher {
                     filteredListOfCars = searchCarsByFuelConsumption(startFuelConsumption, finishFuelConsumption, filteredListOfCars);
                     printFilteredListOfCars(filteredListOfCars);
                     break;
-                case("countOfSeatingPositions"):
+                case ("countOfSeatingPositions"):
                     System.out.println("Input countOfSeatingPositions from: ");
                     int startCountOfSeatingPositions = sc.nextInt();
                     System.out.println("Input countOfSeatingPositions to: ");
@@ -49,7 +48,7 @@ public class UberCarSearcher {
                     filteredListOfCars = searchCarsByCountOfSeatingPositions(startCountOfSeatingPositions, finishCountOfSeatingPositions, filteredListOfCars);
                     printFilteredListOfCars(filteredListOfCars);
                     break;
-                case("cost"):
+                case ("cost"):
                     System.out.println("Input cost from: ");
                     double startCost = sc.nextDouble();
                     System.out.println("Input cost to: ");
@@ -57,7 +56,7 @@ public class UberCarSearcher {
                     filteredListOfCars = searchCarsByCost(startCost, finishCost, filteredListOfCars);
                     printFilteredListOfCars(filteredListOfCars);
                     break;
-                case("type"):
+                case ("type"):
                     System.out.println("Input type: ");
                     filteredListOfCars = searchCarsByType(sc.next(), filteredListOfCars);
                     printFilteredListOfCars(filteredListOfCars);
@@ -71,14 +70,10 @@ public class UberCarSearcher {
         while (isContinue.equals("yes"));
     }
 
-    public List<Car> getListOfCars() {
-        return listOfCars;
-    }
-
     public List<Car> searchCarsByModel(String model, List<Car> listOfCars) {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
-            if (listOfCars.get(i).getModel().contains(model)){
+            if (listOfCars.get(i).getModel().contains(model)) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
@@ -89,7 +84,7 @@ public class UberCarSearcher {
     public List<Car> searchCarsByMake(String make, List<Car> listOfCars) {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
-            if (listOfCars.get(i).getMake().contains(make)){
+            if (listOfCars.get(i).getMake().contains(make)) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
@@ -101,7 +96,7 @@ public class UberCarSearcher {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
             if (listOfCars.get(i).getFuelConsumption() >= startFuelConsumption &&
-                    listOfCars.get(i).getFuelConsumption() <= finishFuelConsumption){
+                    listOfCars.get(i).getFuelConsumption() <= finishFuelConsumption) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
@@ -109,11 +104,11 @@ public class UberCarSearcher {
     }
 
 
-    public List<Car> searchCarsByCountOfSeatingPositions(int startCountOfSeatingPositions,int finishCountOfSeatingPositions, List<Car> listOfCars) {
+    public List<Car> searchCarsByCountOfSeatingPositions(int startCountOfSeatingPositions, int finishCountOfSeatingPositions, List<Car> listOfCars) {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
             if (listOfCars.get(i).getCountOfSeatingPositions() >= startCountOfSeatingPositions &&
-                    listOfCars.get(i).getCountOfSeatingPositions() <= finishCountOfSeatingPositions){
+                    listOfCars.get(i).getCountOfSeatingPositions() <= finishCountOfSeatingPositions) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
@@ -125,7 +120,7 @@ public class UberCarSearcher {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
             if (listOfCars.get(i).getCost() >= startCost &&
-                    listOfCars.get(i).getCost() <= finishCost){
+                    listOfCars.get(i).getCost() <= finishCost) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
@@ -133,11 +128,11 @@ public class UberCarSearcher {
     }
 
 
-    public List<Car> searchCarsByYearOfIssue(int startYearOfIssue, int finishYearOfIssue,  List<Car> listOfCars) {
+    public List<Car> searchCarsByYearOfIssue(int startYearOfIssue, int finishYearOfIssue, List<Car> listOfCars) {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
             if (listOfCars.get(i).getYearOfIssue() >= startYearOfIssue &&
-                    listOfCars.get(i).getYearOfIssue() <= finishYearOfIssue){
+                    listOfCars.get(i).getYearOfIssue() <= finishYearOfIssue) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
@@ -148,16 +143,16 @@ public class UberCarSearcher {
     public List<Car> searchCarsByType(String type, List<Car> listOfCars) {
         List<Car> filteredListOfCars = new ArrayList<>();
         for (int i = 0; i < listOfCars.size(); i++) {
-            if (listOfCars.get(i).getType().contains(type)){
+            if (listOfCars.get(i).getType().contains(type)) {
                 filteredListOfCars.add(listOfCars.get(i));
             }
         }
         return filteredListOfCars;
     }
 
-    private void printFilteredListOfCars(List<Car> listOfCars){
+    private void printFilteredListOfCars(List<Car> listOfCars) {
         for (int i = 0; i < listOfCars.size(); i++) {
-            System.out.println(i+1 + ". " + listOfCars.get(i));
+            System.out.println(i + 1 + ". " + listOfCars.get(i));
         }
         System.out.println();
     }

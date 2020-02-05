@@ -1,7 +1,6 @@
 package com.ivoninsky.taxipark.taxiparks;
 
 import com.ivoninsky.taxipark.cars.Car;
-import com.ivoninsky.taxipark.cars.Sedan;
 import com.ivoninsky.taxipark.sorters.CarCostComparator;
 import com.ivoninsky.taxipark.sorters.CarFuelComparator;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
@@ -19,22 +18,20 @@ public class Uber implements TaxiPark {
 
     @Override
     public void addCarToPark(Car car) {
-        if (car == null){
+        if (car == null) {
             return;
         }
         Integer countOfCars = mapOfCars.get(car);
-        if (countOfCars == null){
+        if (countOfCars == null) {
             countOfCars = 0;
         }
         mapOfCars.put(car, countOfCars + 1);
         listOfCars.add(car);
-        if (car.getCost() <= 10000){
+        if (car.getCost() <= 10000) {
             economClass.add(car);
-        }
-        else if (car.getCost() > 10000 && car.getCost() <= 15000){
+        } else if (car.getCost() > 10000 && car.getCost() <= 15000) {
             comfortClass.add(car);
-        }
-        else{
+        } else {
             businessClass.add(car);
         }
         costOfCars += car.getCost();
@@ -56,31 +53,27 @@ public class Uber implements TaxiPark {
 
 
     private double calculateKilometerCost(Car car) {
-        if (economClass.contains(car)){
+        if (economClass.contains(car)) {
             return 1;
-        }
-        else if (comfortClass.contains(car)){
+        } else if (comfortClass.contains(car)) {
             return 2;
-        }
-        else {
+        } else {
             return 3;
         }
     }
 
 
     private double calculateCarFee(Car car) {
-        if (economClass.contains(car)){
+        if (economClass.contains(car)) {
             return 10;
-        }
-        else if (comfortClass.contains(car)){
+        } else if (comfortClass.contains(car)) {
             return 20;
-        }
-        else {
+        } else {
             return 30;
         }
     }
 
-    public double calculateTotalCostOrder(Car car, int countOfKilometers){
+    public double calculateTotalCostOrder(Car car, int countOfKilometers) {
         double payForKilometers = countOfKilometers * calculateKilometerCost(car);
         double carFee = calculateCarFee(car);
         return payForKilometers + carFee;
@@ -113,8 +106,8 @@ public class Uber implements TaxiPark {
         map.putAll(mapOfCars);
         int counter = 0;
         Map<Car, Integer> mapWithTopElements = new TreeMap<>(carCostComparator);
-        for(Map.Entry<Car, Integer> entry : map.entrySet()){
-            if (counter == count){
+        for (Map.Entry<Car, Integer> entry : map.entrySet()) {
+            if (counter == count) {
                 break;
             }
             mapWithTopElements.put(entry.getKey(), entry.getValue());
@@ -124,27 +117,25 @@ public class Uber implements TaxiPark {
         return mapWithTopElements;
     }
 
-    public void printSortedMap(Map<Car, Integer> givenMap){
-        if (givenMap.size() != 0){
+    public void printSortedMap(Map<Car, Integer> givenMap) {
+        if (givenMap.size() != 0) {
             int count = 0;
-            for (Map.Entry<Car, Integer> entry : givenMap.entrySet()){
-                System.out.println(count+1 + ". " + entry.getKey() + " count: " + entry.getValue());
+            for (Map.Entry<Car, Integer> entry : givenMap.entrySet()) {
+                System.out.println(count + 1 + ". " + entry.getKey() + " count: " + entry.getValue());
                 count++;
             }
-        }
-        else {
+        } else {
             System.out.println("No added cars to taxi park");
         }
 
     }
 
-    public void printListOfCars(List<Car> listOfCars){
-        if (listOfCars.size() != 0){
+    public void printListOfCars(List<Car> listOfCars) {
+        if (listOfCars.size() != 0) {
             for (int i = 0; i < listOfCars.size(); i++) {
-                System.out.println(i+1 + ". " + listOfCars.get(i));
+                System.out.println(i + 1 + ". " + listOfCars.get(i));
             }
-        }
-        else {
+        } else {
             System.out.println("No added cars to taxi park");
         }
     }

@@ -9,11 +9,11 @@ public class IntegerValidator {
 
     private static String COUNTOFCARS_PATTERN = "[0-9]{1,10}";
 
-    public IntegerValidator(){
+    public IntegerValidator() {
         pattern = Pattern.compile(COUNTOFCARS_PATTERN);
     }
 
-    public boolean validate(String countOfCars){
+    public boolean validate(String countOfCars) {
         matcher = pattern.matcher(countOfCars);
         return matcher.matches();
     }

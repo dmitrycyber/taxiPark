@@ -25,32 +25,16 @@ public abstract class Car implements Comparable<Car> {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getMake() {
         return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
     }
 
     public double getFuelConsumption() {
         return fuelConsumption;
     }
 
-    public void setFuelConsumption(double fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
-    }
-
     public int getCountOfSeatingPositions() {
         return countOfSeatingPositions;
-    }
-
-    public void setCountOfSeatingPositions(int countOfSeatingPositions) {
-        this.countOfSeatingPositions = countOfSeatingPositions;
     }
 
     public String getType() {
@@ -71,10 +55,6 @@ public abstract class Car implements Comparable<Car> {
 
     public int getYearOfIssue() {
         return yearOfIssue;
-    }
-
-    public void setYearOfIssue(int yearOfIssue) {
-        this.yearOfIssue = yearOfIssue;
     }
 
     @Override
@@ -107,7 +87,7 @@ public abstract class Car implements Comparable<Car> {
     }
 
     @Override
-    public int compareTo(Car car){
+    public int compareTo(Car car) {
         return (int) (this.fuelConsumption - car.getFuelConsumption());
     }
 }

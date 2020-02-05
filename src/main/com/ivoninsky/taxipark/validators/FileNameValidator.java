@@ -9,11 +9,11 @@ public class FileNameValidator {
 
     private final String FILENAME_PATTERN = "^[A-z0-9_-]{1,10}.json";
 
-    public FileNameValidator(){
+    public FileNameValidator() {
         pattern = Pattern.compile(FILENAME_PATTERN);
     }
 
-    public boolean validate(String fileName){
+    public boolean validate(String fileName) {
         matcher = pattern.matcher(fileName);
         return matcher.matches();
     }

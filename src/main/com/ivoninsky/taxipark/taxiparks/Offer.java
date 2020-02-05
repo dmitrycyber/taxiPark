@@ -23,8 +23,7 @@ public class Offer {
             bufferedWriter.write(car.getMake() + " " + car.getModel() + "\n");
             bufferedWriter.write("Order cost: $" + offerCost);
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

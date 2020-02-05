@@ -1,9 +1,7 @@
 package com.ivoninsky.taxipark.json;
 
-import com.ivoninsky.taxipark.cars.Bus;
 import com.ivoninsky.taxipark.cars.Car;
-import com.ivoninsky.taxipark.cars.Minivan;
-import com.ivoninsky.taxipark.cars.Sedan;
+import com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions.CarTypeContainer;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 
 import java.io.BufferedReader;
@@ -76,33 +74,15 @@ public class JSONReader {
     }
 
     private Car createCarFromMapOfProperties(Map<String, String> map) {
-        Car car = null;
-        if (map.get("type").equals("Sedan")) {
-            car = new Sedan(
-                    map.get("model"),
-                    map.get("make"),
-                    Double.parseDouble(map.get("fuelConsumption")),
-                    Integer.parseInt(map.get("countOfSeatingPositions")),
-                    Double.parseDouble(map.get("cost")),
-                    Integer.parseInt(map.get("yearOfIssue")),
-                    map.get("type"));
-        } else if (map.get("type").equals("Minivan")) {
-            car = new Minivan(map.get("model"),
-                    map.get("make"),
-                    Double.parseDouble(map.get("fuelConsumption")),
-                    Integer.parseInt(map.get("countOfSeatingPositions")),
-                    Double.parseDouble(map.get("cost")),
-                    Integer.parseInt(map.get("yearOfIssue")),
-                    map.get("type"));
-        } else if (map.get("type").equals("Bus")) {
-            car = new Bus(map.get("model"),
-                    map.get("make"),
-                    Double.parseDouble(map.get("fuelConsumption")),
-                    Integer.parseInt(map.get("countOfSeatingPositions")),
-                    Double.parseDouble(map.get("cost")),
-                    Integer.parseInt(map.get("yearOfIssue")),
-                    map.get("type"));
-        }
+        String model = map.get("model");
+        String make = map.get("make");
+        double fuelConsumption = Double.parseDouble(map.get("fuelConsumption"));
+        int countOfSeatingPositions = Integer.parseInt(map.get("countOfSeatingPositions"));
+        double cost = Double.parseDouble(map.get("cost"));
+        int yearOfIssue = Integer.parseInt(map.get("yearOfIssue"));
+        String type = map.get("type");
+        CarTypeContainer carTypeContainer = new CarTypeContainer(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
+        Car car = carTypeContainer.getCarMap().get(type);
         return car;
     }
 }
