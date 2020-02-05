@@ -1,13 +1,19 @@
 package com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions;
 
 import com.ivoninsky.taxipark.consoleNavigation.commands.Command;
+import com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions.searcher.CarSearcher;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
-import com.ivoninsky.taxipark.taxiparks.UberCarSearcher;
 
 public class SearchCarCommand implements Command {
+    private TaxiPark taxiPark;
+
+    public SearchCarCommand(TaxiPark taxiPark) {
+        this.taxiPark = taxiPark;
+    }
+
     @Override
-    public void execute(TaxiPark taxiPark) {
-        UberCarSearcher uberCarSearcher = new UberCarSearcher(taxiPark);
-        uberCarSearcher.start();
+    public void execute() {
+        CarSearcher carSearcher = new CarSearcher(taxiPark);
+        carSearcher.start();
     }
 }

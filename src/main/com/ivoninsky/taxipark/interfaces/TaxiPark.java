@@ -7,17 +7,14 @@ import java.util.Map;
 
 public interface TaxiPark {
     void addCarToPark(Car car);
-    Map<Car, Integer> getMapOfCars();
+    Map<Car, Integer> getCarCountMap();
     List<Car> getListOfCars();
     double getCostOfCars();
     void writeCarsToJSON(String pathToFile);
     double calculateTotalCostOrder(Car car, int numberOfKilometers);
-    Car getOfferACar();
     Map<Car, Integer> orderCarByFuelConsumption();
     Map<Car, Integer> getTopExpensiveCars(int count);
     void printListOfCars(List<Car> listOfCars);
-    List<Car> getEconomClass();
-    List<Car> getComfortClass();
-    List<Car> getBusinessClass();
+    List<Car> getCarsOfClass(String classType);
 
 }

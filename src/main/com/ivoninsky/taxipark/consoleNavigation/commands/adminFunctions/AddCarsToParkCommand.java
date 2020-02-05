@@ -9,9 +9,14 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class AddCarsToParkCommand implements Command {
+    private TaxiPark taxiPark;
+
+    public AddCarsToParkCommand(TaxiPark taxiPark) {
+        this.taxiPark = taxiPark;
+    }
 
     @Override
-    public void execute(TaxiPark taxiPark) {
+    public void execute() {
         Scanner sc = new Scanner(System.in);
         JSONReader jsonReader = new JSONReader();
         ManuallyCreateCarCommand manuallyCreateCarCommand = new ManuallyCreateCarCommand();
@@ -19,7 +24,8 @@ public class AddCarsToParkCommand implements Command {
         try {
             jsonReader.addCarsFromFileToTaxiPark(sc.next(), taxiPark);
             System.out.println("Cars added to taxi park successfully");
-        } catch (FileNotFoundException | StringIndexOutOfBoundsException e) {
+        }
+        catch (FileNotFoundException | StringIndexOutOfBoundsException e) {
             System.out.println("File not found! " +
                     "Input \"yes\" to add car manualy and \"any key\" for exit");
             String isManuallyInputCars = sc.next();
@@ -28,19 +34,7 @@ public class AddCarsToParkCommand implements Command {
                 isManuallyInputCars = sc.next();
             }
             if (isManuallyInputCars.equals("yes")) {
-                String isContinue;
-                do {
-                    Car car = manuallyCreateCarCommand.createCar();
-                    if (car == null) {
-                        System.out.println("Car is null");
-                    } else {
-                        taxiPark.addCarToPark(car);
-                        System.out.println("Car successfully added!");
-                    }
-                    System.out.println("Input \"yes\" to add one more car and \"any symbol\" to exit");
-                    isContinue = sc.next();
-                }
-                while (isContinue.equals("yes"));
+                manuallyCreateCarCommand.addManuallyCarToTaxiPark(taxiPark);
             }
         }
     }

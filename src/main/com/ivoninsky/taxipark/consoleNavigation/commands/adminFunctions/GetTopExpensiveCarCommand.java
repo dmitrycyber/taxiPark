@@ -7,13 +7,19 @@ import com.ivoninsky.taxipark.validators.IntegerValidator;
 import java.util.Scanner;
 
 public class GetTopExpensiveCarCommand implements Command {
+    private TaxiPark taxiPark;
+
+    public GetTopExpensiveCarCommand(TaxiPark taxiPark) {
+        this.taxiPark = taxiPark;
+    }
+
     @Override
-    public void execute(TaxiPark taxiPark) {
+    public void execute() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Input count of top expensive cars: ");
         String s = sc.next();
         IntegerValidator validаtor = new IntegerValidator();
-        while (!validаtor.validate(s)) {
+        while (validаtor.validate(s)) {
             if (!validаtor.validate(s)) {
                 System.out.println("Input valid count of cars: ");
                 s = sc.next();
@@ -28,6 +34,7 @@ public class GetTopExpensiveCarCommand implements Command {
                 continue;
             }
             taxiPark.getTopExpensiveCars(countOfCars);
+            break;
         }
     }
 }

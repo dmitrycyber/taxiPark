@@ -4,8 +4,14 @@ import com.ivoninsky.taxipark.consoleNavigation.commands.Command;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 
 public class OrderCarsCommand implements Command {
+    private TaxiPark taxiPark;
+
+    public OrderCarsCommand(TaxiPark taxiPark) {
+        this.taxiPark = taxiPark;
+    }
+
     @Override
-    public void execute(TaxiPark taxiPark) {
+    public void execute() {
         taxiPark.orderCarByFuelConsumption();
     }
 }

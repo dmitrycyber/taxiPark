@@ -1,17 +1,21 @@
 package com.ivoninsky.taxipark.consoleNavigation;
 
+import com.ivoninsky.taxipark.consoleNavigation.commands.Command;
 import com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions.CommandContainer;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class AdminFunctions {
     private TaxiPark taxiPark;
     private Scanner sc = new Scanner(System.in);
-    private CommandContainer commandContainer = new CommandContainer();
+    private CommandContainer commandContainer;
+    private Optional<Command> optional;
 
     public AdminFunctions(TaxiPark taxiPark) {
         this.taxiPark = taxiPark;
+        commandContainer = new CommandContainer(taxiPark);
     }
 
     public void adminFunctionality() {
@@ -28,12 +32,13 @@ public class AdminFunctions {
                     "7. Add cars to file" + "\n" +
                     "Input \"~\" for exit");
             command = sc.next();
-            try {
-                if (command.equals("~")) {
-                    break;
-                }
-                commandContainer.getCommandMap().get(command).execute(taxiPark);
-            } catch (NullPointerException e) {
+            if (command.equals("~")) {
+                break;
+            }
+            optional = Optional.ofNullable(commandContainer.getCommandMap().get(command));
+            if (optional.isPresent()) {
+                optional.get().execute();
+            } else {
                 System.out.println("There are no command in list, please enter command number again!");
                 command = sc.next();
             }

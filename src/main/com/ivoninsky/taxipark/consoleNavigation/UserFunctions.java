@@ -85,18 +85,10 @@ public class UserFunctions {
 
 
     private void selectClassOfTrip(String classOfTrip) {
-        if (classOfTrip.equals("Econom")) {
-            List<Car> listOfCarsEconomClass = taxiPark.getEconomClass();
-            taxiPark.printListOfCars(listOfCarsEconomClass);
-            selectCar(listOfCarsEconomClass);
-        } else if (classOfTrip.equals("Comfort")) {
-            List<Car> listOfCarsComfortClass = taxiPark.getComfortClass();
-            taxiPark.printListOfCars(listOfCarsComfortClass);
-            selectCar(listOfCarsComfortClass);
-        } else if (classOfTrip.equals("Business")) {
-            List<Car> listOfCarsBusinessClass = taxiPark.getBusinessClass();
-            taxiPark.printListOfCars(listOfCarsBusinessClass);
-            selectCar(listOfCarsBusinessClass);
+        List<Car> listCarsOfClass = taxiPark.getCarsOfClass(classOfTrip);
+        if (!listCarsOfClass.isEmpty()){
+            taxiPark.printListOfCars(listCarsOfClass);
+            selectCar(listCarsOfClass);
         }
     }
 

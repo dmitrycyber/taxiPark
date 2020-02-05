@@ -7,8 +7,14 @@ import com.ivoninsky.taxipark.validators.FileNameValidator;
 import java.util.Scanner;
 
 public class AddCarsToFileCommand implements Command {
+    private TaxiPark taxiPark;
+
+    public AddCarsToFileCommand(TaxiPark taxiPark) {
+        this.taxiPark = taxiPark;
+    }
+
     @Override
-    public void execute(TaxiPark taxiPark) {
+    public void execute() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Input filename like \"test.json\": ");
         String fileName = sc.next();

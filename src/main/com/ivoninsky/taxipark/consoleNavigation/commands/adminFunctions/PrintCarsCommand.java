@@ -7,8 +7,14 @@ import com.ivoninsky.taxipark.interfaces.TaxiPark;
 import java.util.List;
 
 public class PrintCarsCommand implements Command {
+    private TaxiPark taxiPark;
+
+    public PrintCarsCommand(TaxiPark taxiPark) {
+        this.taxiPark = taxiPark;
+    }
+
     @Override
-    public void execute(TaxiPark taxiPark) {
+    public void execute() {
         printListOfCars(taxiPark.getListOfCars());
     }
 

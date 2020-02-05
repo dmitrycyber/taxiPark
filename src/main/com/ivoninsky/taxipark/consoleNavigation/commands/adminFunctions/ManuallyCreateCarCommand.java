@@ -1,9 +1,8 @@
 package com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions;
 
-import com.ivoninsky.taxipark.cars.Bus;
+;
 import com.ivoninsky.taxipark.cars.Car;
-import com.ivoninsky.taxipark.cars.Minivan;
-import com.ivoninsky.taxipark.cars.Sedan;
+import com.ivoninsky.taxipark.interfaces.TaxiPark;
 
 import java.util.Scanner;
 
@@ -17,13 +16,29 @@ public class ManuallyCreateCarCommand {
     private String type;
     private Scanner sc;
     private Car car;
-    CarTypeContainer carTypeContainer;
+    private CarTypeContainer carTypeContainer;
 
     public ManuallyCreateCarCommand() {
         sc = new Scanner(System.in);
     }
 
-    public Car createCar() {
+    public void addManuallyCarToTaxiPark(TaxiPark taxiPark){
+        String isContinue;
+        do {
+            Car car = createCar();
+            if (car == null) {
+                System.out.println("Car is null");
+            } else {
+                taxiPark.addCarToPark(car);
+                System.out.println("Car successfully added!");
+            }
+            System.out.println("Input \"yes\" to add one more car and \"any symbol\" to exit");
+            isContinue = sc.next();
+        }
+        while (isContinue.equals("yes"));
+    }
+
+    private Car createCar() {
         model = validateModel();
         make = validateMake();
         fuelConsumption = validateFuelConsumption();

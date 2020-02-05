@@ -1,4 +1,4 @@
-package com.ivoninsky.taxipark.taxiparks;
+package com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions.searcher;
 
 import com.ivoninsky.taxipark.cars.Car;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class UberCarSearcher {
+public class CarSearcher {
     List<Car> listOfCars;
 
-    public UberCarSearcher(TaxiPark taxiPark) {
+    public CarSearcher(TaxiPark taxiPark) {
         this.listOfCars = taxiPark.getListOfCars();
     }
 

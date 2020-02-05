@@ -1,8 +1,6 @@
 package com.ivoninsky.taxipark.taxiparks;
 
 import com.ivoninsky.taxipark.cars.Car;
-import com.ivoninsky.taxipark.sorters.CarCostComparator;
-import com.ivoninsky.taxipark.sorters.CarFuelComparator;
 import com.ivoninsky.taxipark.interfaces.TaxiPark;
 import com.ivoninsky.taxipark.json.JSONWriter;
 
@@ -41,14 +39,14 @@ public class Uber implements TaxiPark {
         return new ArrayList<>(listOfCars);
     }
 
-    public Map<Car, Integer> getMapOfCars() {
+    public Map<Car, Integer> getCarCountMap() {
         return new HashMap<>(mapOfCars);
     }
 
     @Override
     public void writeCarsToJSON(String pathToFile) {
         JSONWriter jsonWriter = new JSONWriter();
-        jsonWriter.writeToJSON(pathToFile, getMapOfCars());
+        jsonWriter.writeToJSON(pathToFile, getCarCountMap());
     }
 
 
@@ -79,17 +77,10 @@ public class Uber implements TaxiPark {
         return payForKilometers + carFee;
     }
 
-
-    @Override
-    public Car getOfferACar() {
-        return null;
-    }
-
     @Override
     public Map<Car, Integer> orderCarByFuelConsumption() {
-        CarFuelComparator carFuelComparator = new CarFuelComparator();
-        Map<Car, Integer> sortedMap = new TreeMap<>(carFuelComparator);
-        sortedMap.putAll(getMapOfCars());
+        Map<Car, Integer> sortedMap = new TreeMap<>((car1, car2) -> (int) (car1.getFuelConsumption() - car2.getFuelConsumption()));
+        sortedMap.putAll(getCarCountMap());
         printSortedMap(sortedMap);
         return sortedMap;
     }
@@ -101,11 +92,10 @@ public class Uber implements TaxiPark {
 
     @Override
     public Map<Car, Integer> getTopExpensiveCars(int count) {
-        CarCostComparator carCostComparator = new CarCostComparator();
-        TreeMap<Car, Integer> map = new TreeMap<>(carCostComparator);
+        TreeMap<Car, Integer> map = new TreeMap<>((car1, car2) -> (int) (car2.getCost() - car1.getCost()));
         map.putAll(mapOfCars);
         int counter = 0;
-        Map<Car, Integer> mapWithTopElements = new TreeMap<>(carCostComparator);
+        Map<Car, Integer> mapWithTopElements = new TreeMap<>((car1, car2) -> (int) (car2.getCost() - car1.getCost()));
         for (Map.Entry<Car, Integer> entry : map.entrySet()) {
             if (counter == count) {
                 break;
@@ -140,15 +130,18 @@ public class Uber implements TaxiPark {
         }
     }
 
-    public List<Car> getEconomClass() {
-        return new ArrayList<>(economClass);
-    }
-
-    public List<Car> getComfortClass() {
-        return new ArrayList<>(comfortClass);
-    }
-
-    public List<Car> getBusinessClass() {
-        return new ArrayList<>(businessClass);
+    @Override
+    public List<Car> getCarsOfClass(String classType) {
+        List<Car> listCarsOfClass = new ArrayList<>();
+        if (classType.equals("Econom")){
+            listCarsOfClass.addAll(economClass);
+        }
+        else if (classType.equals("Comfort")){
+            listCarsOfClass.addAll(comfortClass);
+        }
+        else if (classType.equals("Business")){
+            listCarsOfClass.addAll(businessClass);
+        }
+        return listCarsOfClass;
     }
 }
