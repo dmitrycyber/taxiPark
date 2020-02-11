@@ -1,0 +1,147 @@
+package com.ivoninsky.taxipark.taxiparks;
+
+import com.ivoninsky.taxipark.cars.Car;
+import com.ivoninsky.taxipark.interfaces.TaxiPark;
+import com.ivoninsky.taxipark.json.JSONWriter;
+
+import java.util.*;
+
+public class Uber implements TaxiPark {
+    private Map<Car, Integer> mapOfCars = new HashMap<>();
+    private double costOfCars;
+    private List<Car> listOfCars = new ArrayList<>();
+    private List<Car> economClass = new ArrayList<>();
+    private List<Car> comfortClass = new ArrayList<>();
+    private List<Car> businessClass = new ArrayList<>();
+
+    @Override
+    public void addCarToPark(Car car) {
+        if (car == null) {
+            return;
+        }
+        Integer countOfCars = mapOfCars.get(car);
+        if (countOfCars == null) {
+            countOfCars = 0;
+        }
+        mapOfCars.put(car, countOfCars + 1);
+        listOfCars.add(car);
+        if (car.getCost() <= 10000) {
+            economClass.add(car);
+        } else if (car.getCost() > 10000 && car.getCost() <= 15000) {
+            comfortClass.add(car);
+        } else {
+            businessClass.add(car);
+        }
+        costOfCars += car.getCost();
+    }
+
+    public List<Car> getListOfCars() {
+        return new ArrayList<>(listOfCars);
+    }
+
+    public Map<Car, Integer> getCarCountMap() {
+        return new HashMap<>(mapOfCars);
+    }
+
+    @Override
+    public void writeCarsToJSON(String pathToFile) {
+        JSONWriter jsonWriter = new JSONWriter();
+        jsonWriter.writeToJSON(pathToFile, getCarCountMap());
+    }
+
+
+    private double calculateKilometerCost(Car car) {
+        if (economClass.contains(car)) {
+            return 1;
+        } else if (comfortClass.contains(car)) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
+
+    private double calculateCarFee(Car car) {
+        if (economClass.contains(car)) {
+            return 10;
+        } else if (comfortClass.contains(car)) {
+            return 20;
+        } else {
+            return 30;
+        }
+    }
+
+    public double calculateTotalCostOrder(Car car, int countOfKilometers) {
+        double payForKilometers = countOfKilometers * calculateKilometerCost(car);
+        double carFee = calculateCarFee(car);
+        return payForKilometers + carFee;
+    }
+
+    @Override
+    public Map<Car, Integer> orderCarByFuelConsumption() {
+        Map<Car, Integer> sortedMap = new TreeMap<>((car1, car2) -> (int) (car1.getFuelConsumption() - car2.getFuelConsumption()));
+        sortedMap.putAll(getCarCountMap());
+        printSortedMap(sortedMap);
+        return sortedMap;
+    }
+
+    @Override
+    public double getCostOfCars() {
+        return new Double(costOfCars);
+    }
+
+    @Override
+    public Map<Car, Integer> getTopExpensiveCars(int count) {
+        TreeMap<Car, Integer> map = new TreeMap<>((car1, car2) -> (int) (car2.getCost() - car1.getCost()));
+        map.putAll(mapOfCars);
+        int counter = 0;
+        Map<Car, Integer> mapWithTopElements = new TreeMap<>((car1, car2) -> (int) (car2.getCost() - car1.getCost()));
+        for (Map.Entry<Car, Integer> entry : map.entrySet()) {
+            if (counter == count) {
+                break;
+            }
+            mapWithTopElements.put(entry.getKey(), entry.getValue());
+            counter++;
+        }
+        printSortedMap(mapWithTopElements);
+        return mapWithTopElements;
+    }
+
+    public void printSortedMap(Map<Car, Integer> givenMap) {
+        if (givenMap.size() != 0) {
+            int count = 0;
+            for (Map.Entry<Car, Integer> entry : givenMap.entrySet()) {
+                System.out.println(count + 1 + ". " + entry.getKey() + " count: " + entry.getValue());
+                count++;
+            }
+        } else {
+            System.out.println("No added cars to taxi park");
+        }
+
+    }
+
+    public void printListOfCars(List<Car> listOfCars) {
+        if (listOfCars.size() != 0) {
+            for (int i = 0; i < listOfCars.size(); i++) {
+                System.out.println(i + 1 + ". " + listOfCars.get(i));
+            }
+        } else {
+            System.out.println("No added cars to taxi park");
+        }
+    }
+
+    @Override
+    public List<Car> getCarsOfClass(String classType) {
+        List<Car> listCarsOfClass = new ArrayList<>();
+        if (classType.equals("Econom")){
+            listCarsOfClass.addAll(economClass);
+        }
+        else if (classType.equals("Comfort")){
+            listCarsOfClass.addAll(comfortClass);
+        }
+        else if (classType.equals("Business")){
+            listCarsOfClass.addAll(businessClass);
+        }
+        return listCarsOfClass;
+    }
+}

@@ -1,0 +1,87 @@
+package com.ivoninsky.taxipark.json;
+
+import com.ivoninsky.taxipark.cars.Car;
+import com.ivoninsky.taxipark.consoleNavigation.commands.adminFunctions.CarTypeContainer;
+import com.ivoninsky.taxipark.interfaces.TaxiPark;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
+public class JSONReader {
+
+    public void addCarsFromFileToTaxiPark(String pathToFile, TaxiPark taxiPark) throws FileNotFoundException, StringIndexOutOfBoundsException {
+        List<Car> listOfCars = init(pathToFile);
+        for (int i = 0; i < listOfCars.size(); i++) {
+            taxiPark.addCarToPark(listOfCars.get(i));
+        }
+    }
+
+    private List<Car> init(String pathToFile) throws FileNotFoundException, StringIndexOutOfBoundsException {
+        String parsedString = readJson(pathToFile);
+        String formatedString = getFormatedStringFromJson(parsedString);
+        List<Car> listOfCars = getListOfCarsFromFile(formatedString);
+        return listOfCars;
+    }
+
+    private String readJson(String pathToFile) {
+        String parsedString = "";
+        String line;
+        try (FileReader fileReader = new FileReader(pathToFile); BufferedReader rd = new BufferedReader(fileReader)) {
+            while ((line = rd.readLine()) != null) {
+                parsedString += line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return parsedString;
+    }
+
+    private String getFormatedStringFromJson(String parsedString) {
+        String formatedString;
+        String string1 = parsedString.replaceAll("]", "");
+        String string2 = string1.replaceAll("\\[", "");
+        String string3 = string2.replaceAll(" ", "");
+        String string4 = string3.replaceAll("\"", "");
+
+        StringBuffer sb = new StringBuffer(string4);
+        sb.delete(0, 1);
+        sb.delete(sb.length() - 1, sb.length());
+        formatedString = sb.toString();
+        return formatedString;
+    }
+
+    private List<Car> getListOfCarsFromFile(String formatedString) {
+        String[] carStrings = formatedString.split("},\\{");
+        Map<String, String> propertiesOfCar = new HashMap<>();
+        List<Car> cars = new ArrayList<>();
+
+        for (int i = 0; i < carStrings.length; i++) {
+            String carProperties = carStrings[i];
+            String[] carProperty = carProperties.split(",");
+            for (int j = 0; j < carProperty.length; j++) {
+                String addToMapProperty = carProperty[j];
+                String[] finaly = addToMapProperty.split(":");
+                propertiesOfCar.put(finaly[0], finaly[1]);
+            }
+            cars.add(createCarFromMapOfProperties(propertiesOfCar));
+            propertiesOfCar.clear();
+        }
+        return cars;
+    }
+
+    private Car createCarFromMapOfProperties(Map<String, String> map) {
+        String model = map.get("model");
+        String make = map.get("make");
+        double fuelConsumption = Double.parseDouble(map.get("fuelConsumption"));
+        int countOfSeatingPositions = Integer.parseInt(map.get("countOfSeatingPositions"));
+        double cost = Double.parseDouble(map.get("cost"));
+        int yearOfIssue = Integer.parseInt(map.get("yearOfIssue"));
+        String type = map.get("type");
+        Car car = CarTypeContainer.getCarFromType(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
+        return car;
+    }
+}

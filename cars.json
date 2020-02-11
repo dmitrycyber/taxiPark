@@ -1,0 +1,101 @@
+[
+  {
+    "model": "Acura",
+    "make": "RSX",
+    "fuelConsumption": 15.5,
+    "countOfSeatingPositions": 4,
+    "cost": 50000,
+    "yearOfIssue": 2019,
+    "type": "Sedan"
+  },
+  {
+    "model": "Opel",
+    "make": "Astra",
+    "fuelConsumption": 8.0,
+    "countOfSeatingPositions": 4,
+    "cost": 10000,
+    "yearOfIssue": 2018,
+    "type": "Sedan"
+  },
+  {
+    "model": "Volkswagen",
+    "make": "Multivan",
+    "fuelConsumption": 10.1,
+    "countOfSeatingPositions": 5,
+    "cost": 16000,
+    "yearOfIssue": 2019,
+    "type": "Minivan"
+  },
+  {
+    "model": "Maz",
+    "make": "1684",
+    "fuelConsumption": 20,
+    "countOfSeatingPositions": 10,
+    "cost": 25000,
+    "yearOfIssue": 2017,
+    "type": "Bus"
+  },
+  {
+    "model": "Peugeot",
+    "make": "806",
+    "fuelConsumption": 13.1,
+    "countOfSeatingPositions": 5,
+    "cost": 13000,
+    "yearOfIssue": 2016,
+    "type": "Minivan"
+  },
+  {
+    "model": "Renault",
+    "make": "Logan",
+    "fuelConsumption": 7.3,
+    "countOfSeatingPositions": 4,
+    "cost": 12000,
+    "yearOfIssue": 2018,
+    "type": "Sedan"
+  },
+  {
+    "model": "Skoda",
+    "make": "Rapid",
+    "fuelConsumption": 8.8,
+    "countOfSeatingPositions": 4,
+    "cost": 16800,
+    "yearOfIssue": 2019,
+    "type": "Sedan"
+  },
+  {
+    "model": "Iveco",
+    "make": "ololo",
+    "fuelConsumption": 23.7,
+    "countOfSeatingPositions": 24,
+    "cost": 28351,
+    "yearOfIssue": 2015,
+    "type": "Bus"
+  },
+  {
+    "model": "Neman",
+    "make": "Vedro",
+    "fuelConsumption": 30.0,
+    "countOfSeatingPositions": 13,
+    "cost": 4900,
+    "yearOfIssue": 2006,
+    "type": "Bus"
+  },
+  {
+    "model": "Dodge",
+    "make": "Caravan",
+    "fuelConsumption": 15.6,
+    "countOfSeatingPositions": 5,
+    "cost": 18000,
+    "yearOfIssue": 2016,
+    "type": "Minivan"
+  },
+  {
+    "model": "Geely",
+    "make": "Borui",
+    "fuelConsumption": 11.5,
+    "countOfSeatingPositions": 4,
+    "cost": 24700,
+    "yearOfIssue": 2019,
+    "type": "Sedan"
+  }
+]
