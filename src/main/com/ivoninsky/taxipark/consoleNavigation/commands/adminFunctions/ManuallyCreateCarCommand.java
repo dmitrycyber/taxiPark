@@ -30,6 +30,7 @@ public class ManuallyCreateCarCommand {
                 System.out.println("Car is null");
             } else {
                 taxiPark.addCarToPark(car);
+                System.out.println(car);
                 System.out.println("Car successfully added!");
             }
             System.out.println("Input \"yes\" to add one more car and \"any symbol\" to exit");
@@ -46,8 +47,7 @@ public class ManuallyCreateCarCommand {
         cost = validateCarCost();
         yearOfIssue = validateYearOfIssue();
         type = validateCarType();
-        carTypeContainer = new CarTypeContainer(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
-        car = carTypeContainer.getCarMap().get(type);
+        car = CarTypeContainer.getCarFromType(model, make, fuelConsumption,countOfSeatingPositions, cost, yearOfIssue, type);
         return car;
     }
 

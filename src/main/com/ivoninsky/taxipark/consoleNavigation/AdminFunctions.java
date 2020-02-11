@@ -38,7 +38,8 @@ public class AdminFunctions {
             optional = Optional.ofNullable(commandContainer.getCommandMap().get(command));
             if (optional.isPresent()) {
                 optional.get().execute();
-            } else {
+            }
+            else {
                 System.out.println("There are no command in list, please enter command number again!");
                 command = sc.next();
             }

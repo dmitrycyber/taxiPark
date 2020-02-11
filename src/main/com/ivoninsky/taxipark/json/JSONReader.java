@@ -81,8 +81,7 @@ public class JSONReader {
         double cost = Double.parseDouble(map.get("cost"));
         int yearOfIssue = Integer.parseInt(map.get("yearOfIssue"));
         String type = map.get("type");
-        CarTypeContainer carTypeContainer = new CarTypeContainer(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
-        Car car = carTypeContainer.getCarMap().get(type);
+        Car car = CarTypeContainer.getCarFromType(model, make, fuelConsumption, countOfSeatingPositions, cost, yearOfIssue, type);
         return car;
     }
 }
